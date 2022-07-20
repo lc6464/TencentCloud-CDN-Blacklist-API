@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+	</PropertyGroup>
+	<ItemGroup>
+		<Folder Include="wwwroot\" />
+	</ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="TencentCloudSDK.Cdn" Version="3.0.562" />
+	</ItemGroup>
+	<ItemGroup>
+		<Using Include="TencentCloud.Common" />
+		<Using Include="TencentCloud.Cdn.V20180606" />
+		<Using Include="TencentCloudCDNBlacklistAPI" />
+		<Using Include="TencentCloudCDNBlacklistAPI.Services" />
+		<Using Include="Microsoft.AspNetCore.Mvc" />
+	</ItemGroup>
+</Project>
