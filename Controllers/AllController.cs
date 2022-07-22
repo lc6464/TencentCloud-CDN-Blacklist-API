@@ -47,8 +47,8 @@ public class AllController : ControllerBase {
 			return new() { Success = false, Message = "No any data." };
 		}
 
-		if (blacklist.Length > 50) {
-			_logger.LogError("Put: 黑名单内的地址/地址段过多，最多仅支持50个！");
+		if (blacklist.Length > 200) {
+			_logger.LogError("Put: 黑名单内的地址/地址段过多，最多仅支持200个！");
 			return new() { Success = false, Message = "Too many blacklist members." };
 		}
 		
