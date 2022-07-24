@@ -18,6 +18,7 @@
 		<Using Include="TencentCloudCDNBlacklistAPI.Services" />
 		<Using Include="Microsoft.AspNetCore.Mvc" />
 		<Using Include="Microsoft.Extensions.Caching.Memory" />
+		<Using Include="System.Text.Json" />
 	</ItemGroup>
 	<ItemGroup>
 	  <EditorConfigFiles Remove="D:\LC\Develop\VS\.NET Web\TencentCloudCDNBlacklistAPI\.editorconfig" />

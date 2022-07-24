@@ -4,10 +4,12 @@ namespace TencentCloudCDNBlacklistAPI.Services;
 public class ConfirmSign : IConfirmSign {
 	private readonly IConfiguration _configuration;
 	private readonly IMemoryCache _memoryCache;
+	private readonly ILogger<ConfirmSign> _logger;
 
-	public ConfirmSign(IConfiguration configuration, IMemoryCache memoryCache) {
+	public ConfirmSign(IConfiguration configuration, IMemoryCache memoryCache, ILogger<ConfirmSign> logger) {
 		_configuration = configuration;
 		_memoryCache = memoryCache;
+		_logger = logger;
 	}
 
 	public bool Confirm(long timestamp, string? sign, string cacheKey) {
@@ -31,13 +33,13 @@ public class ConfirmSign : IConfirmSign {
 
 		if (Convert.ToBase64String(hs256.ComputeHash(data))[..43].Replace('+', '-').Replace('/', '_') == sign) {
 			if (_memoryCache.TryGetValue(cacheKey, out string lastSign)) { // 如果存在上次的签名，则获取
-				if (lastSign != sign) {
-					_ = _memoryCache.Set(cacheKey, sign, TimeSpan.FromSeconds(35)); // 写入签名
-					return true;
+				if (lastSign == sign) {
+					_logger.LogInformation("遭遇重放攻击或请求过于频繁！T: {}    S: {}", timestamp, sign);
+					return false; // 如一致，则 return false，防止重放攻击
 				}
-				return false; // 如一致，则 return false，防止重放攻击
+				_ = _memoryCache.Set(cacheKey, sign, TimeSpan.FromSeconds(35)); // 写入签名
+				return true;
 			}
-			_ = _memoryCache.Set(cacheKey, sign, TimeSpan.FromSeconds(35)); // 写入签名
 			return true;
 		}
 		return false;

@@ -32,7 +32,7 @@ public class AllController : ControllerBase {
 				_logger.LogDebug("Get: 请求 API 返回：{}", AbstractModel.ToJsonString(res));
 				return new() { Success = true, Blacklist = res.Domains[0]!.IpFilter.Filters };
 			} catch (Exception e) {
-				_logger.LogCritical("Get: 请求 API 过程中发生异常：{}", e);
+				_logger.LogError("Get: 请求 API 过程中发生异常：{}", e);
 				return new() { Success = false, Message = e.Message };
 			}
 		}
@@ -47,6 +47,7 @@ public class AllController : ControllerBase {
 			return new() { Success = false, Message = "No any data." };
 		}
 
+		_logger.LogDebug("Put: 收到请求：{}", JsonSerializer.Serialize(blacklist));
 		if (blacklist.Length > 200) {
 			_logger.LogError("Put: 黑名单内的地址/地址段过多，最多仅支持200个！");
 			return new() { Success = false, Message = "Too many blacklist members." };
@@ -67,7 +68,7 @@ public class AllController : ControllerBase {
 				_logger.LogDebug("Get: 请求 API 返回：{}", AbstractModel.ToJsonString(res));
 				return new() { Success = true };
 			} catch (Exception e) {
-				_logger.LogCritical("Get: 请求 API 过程中发生异常：{}", e);
+				_logger.LogError("Get: 请求 API 过程中发生异常：{}", e);
 				return new() { Success = false, Message = e.Message };
 			}
 		}
