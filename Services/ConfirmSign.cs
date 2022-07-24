@@ -1,10 +1,10 @@
 ﻿using System.Security.Cryptography;
 
 namespace TencentCloudCDNBlacklistAPI.Services;
-public class ConfirmSign: IConfirmSign {
+public class ConfirmSign : IConfirmSign {
 	private readonly IConfiguration _configuration;
 	private readonly IMemoryCache _memoryCache;
-	
+
 	public ConfirmSign(IConfiguration configuration, IMemoryCache memoryCache) {
 		_configuration = configuration;
 		_memoryCache = memoryCache;

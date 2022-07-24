@@ -51,7 +51,7 @@ public class AllController : ControllerBase {
 			_logger.LogError("Put: 黑名单内的地址/地址段过多，最多仅支持200个！");
 			return new() { Success = false, Message = "Too many blacklist members." };
 		}
-		
+
 		if (_sign.Confirm(timestamp, sign, "LastSign")) {
 			_logger.LogDebug("Put: 校验签名成功。");
 

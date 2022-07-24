@@ -1,5 +1,5 @@
 ﻿namespace TencentCloudCDNBlacklistAPI.Services;
-public class TencentCloudSDKClient: ITencentCloudSDKClient {
+public class TencentCloudSDKClient : ITencentCloudSDKClient {
 	public TencentCloudSDKClient(ITencentCloudSDKCredential credential) {
 		Client = new(credential.Credential, "");
 	}
