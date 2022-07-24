@@ -1,11 +1,11 @@
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services
-	.AddMemoryCache()
-	.AddSingleton<ITencentCloudSDKCredential, TencentCloudSDKCredential>()
-	.AddScoped<ITencentCloudSDKClient, TencentCloudSDKClient>()
-	.AddSingleton<IConfirmSign, ConfirmSign>()
-	.AddControllers();
+    .AddMemoryCache()
+    .AddSingleton<ITencentCloudSDKCredential, TencentCloudSDKCredential>()
+    .AddScoped<ITencentCloudSDKClient, TencentCloudSDKClient>()
+    .AddSingleton<IConfirmSign, ConfirmSign>()
+    .AddControllers();
 
 
 var app = builder.Build();

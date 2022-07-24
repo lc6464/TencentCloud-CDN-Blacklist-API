@@ -1,4 +1,5 @@
 ﻿namespace TencentCloudCDNBlacklistAPI.Services;
-public interface ITencentCloudSDKCredential {
-	Credential Credential { get; init; }
+public interface ITencentCloudSDKCredential
+{
+    Credential Credential { get; init; }
 }
