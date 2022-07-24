@@ -11,9 +11,14 @@ public class ConfirmSign : IConfirmSign {
 	}
 
 	public bool Confirm(long timestamp, string? sign, string cacheKey) {
-		if (sign?.Length != 43) return false;
+		if (sign?.Length != 43) {
+			return false;
+		}
+
 		var now = new DateTimeOffset(DateTime.Now).ToUnixTimeSeconds();
-		if (now - timestamp > 30 || timestamp - now > 2) return false; // 判断时间戳
+		if (now - timestamp > 30 || timestamp - now > 2) {
+			return false; // 判断时间戳
+		}
 
 		var timestampData = BitConverter.GetBytes(timestamp);
 		var data = new byte[104];
@@ -27,12 +32,12 @@ public class ConfirmSign : IConfirmSign {
 		if (Convert.ToBase64String(hs256.ComputeHash(data))[..43].Replace('+', '-').Replace('/', '_') == sign) {
 			if (_memoryCache.TryGetValue(cacheKey, out string lastSign)) { // 如果存在上次的签名，则获取
 				if (lastSign != sign) {
-					_memoryCache.Set(cacheKey, sign, TimeSpan.FromSeconds(35)); // 写入签名
+					_ = _memoryCache.Set(cacheKey, sign, TimeSpan.FromSeconds(35)); // 写入签名
 					return true;
 				}
 				return false; // 如一致，则 return false，防止重放攻击
 			}
-			_memoryCache.Set(cacheKey, sign, TimeSpan.FromSeconds(35)); // 写入签名
+			_ = _memoryCache.Set(cacheKey, sign, TimeSpan.FromSeconds(35)); // 写入签名
 			return true;
 		}
 		return false;
