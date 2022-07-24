@@ -27,6 +27,7 @@ public class AllController : ControllerBase {
 					}
 				}
 			};
+
 			try {
 				var res = _client.Client.DescribeDomainsConfigSync(req);
 				_logger.LogDebug("Get: 请求 API 返回：{}", AbstractModel.ToJsonString(res));
@@ -58,9 +59,11 @@ public class AllController : ControllerBase {
 
 			UpdateDomainConfigRequest req = new() {
 				Domain = _configuration["Domain"],
-				IpFilter = new() {
+				IpFilter = blacklist.Length == 0 ? (new() {
+					Switch = "off", FilterType = "blacklist"
+				}) : (new() {
 					Switch = "on", FilterType = "blacklist", Filters = blacklist
-				}
+				})
 			};
 
 			try {
